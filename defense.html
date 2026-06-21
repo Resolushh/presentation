@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Защита — Съедобное & Несъедобное</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sage: #8B947F;
+            --sage-light: #a8b09c;
+            --sage-dark: #6d7662;
+            --cream: #f4f3f0;
+            --white: #fafafa;
+            --ink: #2a2826;
+            --text: #1a1a1a;
+            --muted: #5c5c5c;
+            --border: #e0dcd6;
+            --shadow: 0 8px 32px rgba(42, 40, 38, .08);
+            --shadow-lg: 0 16px 48px rgba(42, 40, 38, .12);
+            --ok: #1a6b34;
+            --radius: 14px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 18px;
+            background: #0f0f0f;
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .deck { width: 100vw; height: 100vh; position: relative; }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            padding: 0;
+            background: var(--white);
+            overflow: hidden;
+        }
+
+        .slide.active { display: flex; }
+
+        /* ── Brand chrome (all slides except title) ── */
+        .chrome {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 48px;
+            background: linear-gradient(180deg, #fff 0%, var(--cream) 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: .01em;
+        }
+
+        .brand span { color: var(--sage-dark); font-weight: 500; font-family: Inter, sans-serif; font-size: .75rem; margin-left: 12px; letter-spacing: .06em; text-transform: uppercase; }
+
+        .badge-num {
+            font-size: .8rem;
+            font-weight: 700;
+            color: #fff;
+            background: var(--sage-dark);
+            padding: 6px 14px;
+            border-radius: 999px;
+        }
+
+        .slide-main {
+            flex: 1;
+            min-height: 0;
+            padding: 18px 44px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background:
+                radial-gradient(ellipse 80% 50% at 100% 0%, rgba(139,148,127,.07), transparent),
+                var(--white);
+        }
+
+        .slide-head { flex-shrink: 0; }
+
+        h1 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+            font-weight: 600;
+            line-height: 1.12;
+        }
+
+        h2 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(2rem, 3.5vw, 2.65rem);
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1.1;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        h2::before {
+            content: '';
+            width: 5px;
+            height: 1.1em;
+            background: linear-gradient(180deg, var(--sage), var(--sage-dark));
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .slide-lead {
+            margin-top: 6px;
+            margin-left: 19px;
+            font-size: .98rem;
+            color: var(--muted);
+            max-width: 920px;
+            line-height: 1.42;
+        }
+
+        .say {
+            margin-top: 4px;
+            margin-left: 19px;
+            font-size: .8rem;
+            color: var(--sage-dark);
+            font-style: italic;
+        }
+
+        .slide-body {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .slide-footer {
+            flex-shrink: 0;
+            padding: 10px 48px 14px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--muted);
+            background: var(--cream);
+        }
+
+        .footer-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .footer-tag::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--sage);
+            border-radius: 50%;
+        }
+
+        /* ── Title ── */
+        .title-slide { background: #000; }
+
+        .title-bg { position: absolute; inset: 0; }
+        .title-bg img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: brightness(.85); }
+        .title-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(155deg, rgba(18,16,14,.94) 0%, rgba(18,16,14,.68) 50%, rgba(92,107,82,.9) 100%);
+        }
+
+        .title-content {
+            position: relative; z-index: 2; flex: 1;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center; padding: 56px 72px 80px;
+        }
+
+        .title-badge {
+            margin-bottom: 20px;
+            padding: 9px 24px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,.3);
+            background: rgba(255,255,255,.1);
+            backdrop-filter: blur(10px);
+            font-size: .9rem;
+            color: rgba(255,255,255,.9);
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+
+        .title-slide h1 { color: #fff; max-width: 960px; text-shadow: 0 4px 32px rgba(0,0,0,.5); }
+        .title-sub { margin-top: 16px; font-size: 1.15rem; color: rgba(255,255,255,.75); max-width: 700px; line-height: 1.5; }
+        .title-meta {
+            margin-top: 36px;
+            padding: 24px 36px;
+            border-radius: var(--radius);
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.15);
+            font-size: 1.08rem;
+            line-height: 1.85;
+            color: rgba(255,255,255,.92);
+        }
+
+        .title-slide .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: rgba(0,0,0,.35);
+            border-top-color: rgba(255,255,255,.15);
+            color: rgba(255,255,255,.6);
+            backdrop-filter: blur(8px);
+        }
+
+        .title-slide .badge-num { background: rgba(255,255,255,.2); }
+
+        /* ── Layout ── */
+        .cols { display: grid; gap: 18px; min-height: 0; }
+        .cols--55-45 { grid-template-columns: 1.05fr .95fr; flex: 1; }
+        .cols--50-50 { grid-template-columns: 1fr 1fr; flex: 1; }
+        .cols--46-54 { grid-template-columns: 46% 54%; flex: 1; align-items: stretch; }
+
+        /* Stack slide */
+        .stack-page { gap: 12px !important; }
+
+        .stack-layout {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: 46% 54%;
+            gap: 22px;
+            align-items: stretch;
+        }
+
+        .stack-table {
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .stack-table table { font-size: .93rem; }
+        .stack-table th, .stack-table td { padding: 12px 14px; }
+        .stack-table td:first-child { font-weight: 600; white-space: nowrap; width: 1%; }
+        .stack-table td:nth-child(2) { white-space: nowrap; font-size: .88rem; color: var(--sage-dark); }
+        .stack-table td:last-child { font-size: .86rem; line-height: 1.42; color: var(--muted); }
+
+        .stack-shot {
+            height: 100%;
+            min-height: 0;
+            background: #1a1b1e;
+            border-color: #2d2f34;
+        }
+
+        .stack-shot img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            object-position: center top;
+        }
+
+        .stack-shot figcaption {
+            background: #25262b;
+            color: #aaa;
+            border-top-color: #333;
+        }
+
+        .stack-tools {
+            flex-shrink: 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 12px;
+            padding: 12px 16px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: .88rem;
+            color: var(--muted);
+        }
+
+        .stack-tools strong { color: var(--ink); margin-right: 4px; }
+        .stack-tools .pill {
+            padding: 4px 10px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: .82rem;
+            color: var(--text);
+        }
+
+        .slide-head--compact { margin-bottom: 10px; }
+        .slide-head--compact .slide-lead { font-size: .98rem; }
+        .slide-head--compact .say { font-size: .82rem; margin-top: 4px; }
+
+        /* TZ: compact blocks */
+        .tz-grid-2x2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .tz-grid-2x2 .panel { padding: 14px 16px; }
+        .tz-grid-2x2 .panel p { font-size: .9rem; line-height: 1.45; }
+
+        .tz-goal {
+            margin-top: 10px;
+            padding: 10px 14px;
+            font-size: .88rem;
+            line-height: 1.45;
+            border-left: 4px solid var(--sage);
+            background: linear-gradient(90deg, rgba(139,148,127,.12), transparent);
+            border-radius: 0 10px 10px 0;
+        }
+
+        .func-compact {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .func-compact .panel li { font-size: .9rem; padding: 4px 0 4px 18px; }
+
+        .ui-strip {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .status-inline {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 10px 14px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            font-size: .8rem;
+            color: var(--muted);
+        }
+
+        .status-inline strong {
+            color: var(--ink);
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-right: 4px;
+        }
+
+        .status-inline code {
+            font-size: .72rem;
+            padding: 3px 6px;
+        }
+
+        .status-inline .arr { color: var(--sage); font-weight: 700; }
+
+        /* Architecture slide — TZ: simple scheme */
+        .arch-layout {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: 1fr 40%;
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .arch-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 0;
+        }
+
+        .arch-block {
+            padding: 12px 14px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .arch-block h3 {
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--sage-dark);
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .arch-block p, .arch-block li {
+            font-size: .88rem;
+            line-height: 1.45;
+            color: var(--text);
+        }
+
+        .arch-block ul { list-style: none; }
+        .arch-block li {
+            padding: 3px 0 3px 14px;
+            position: relative;
+        }
+
+        .arch-block li::before {
+            content: '';
+            position: absolute; left: 0; top: .55em;
+            width: 5px; height: 5px;
+            background: var(--sage);
+            border-radius: 50%;
+        }
+
+        .arch-layers {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .arch-layer {
+            flex: 1;
+            min-width: 72px;
+            text-align: center;
+            padding: 8px 6px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: .8rem;
+            font-weight: 600;
+        }
+
+        .arch-layer-arrow { color: var(--sage); font-weight: 700; }
+
+        .arch-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .arch-tag {
+            padding: 4px 10px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: .78rem;
+            color: var(--text);
+        }
+
+        .arch-tag b { color: var(--ink); }
+
+        .arch-shot {
+            height: 100%;
+            min-height: 0;
+        }
+
+        .arch-shot img {
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            background: #fff;
+        }
+
+        .panel {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .panel h3 {
+            font-size: .78rem;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--sage-dark);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .panel p, .panel li { font-size: .94rem; line-height: 1.48; color: var(--text); }
+        .panel ul:not(.checklist):not(.demo-check) { list-style: none; }
+        .panel ul:not(.checklist):not(.demo-check) li { padding: 5px 0 5px 20px; position: relative; }
+        .panel ul:not(.checklist):not(.demo-check) li::before {
+            content: '';
+            position: absolute; left: 0; top: .65em;
+            width: 6px; height: 6px;
+            background: var(--sage);
+            border-radius: 50%;
+        }
+
+        .goal {
+            padding: 14px 18px;
+            border-left: 4px solid var(--sage);
+            background: linear-gradient(90deg, rgba(139,148,127,.14), transparent);
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-size: 1rem;
+            line-height: 1.5;
+            box-shadow: var(--shadow);
+        }
+
+        .shot {
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            background: #eceae6;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+        }
+
+        .shot img {
+            width: 100%; flex: 1; min-height: 0;
+            object-fit: contain;
+            object-position: top center;
+            display: block;
+        }
+
+        .shot--fill img { object-fit: cover; }
+
+        .shot figcaption {
+            flex-shrink: 0;
+            padding: 9px 14px;
+            font-size: .82rem;
+            font-weight: 600;
+            text-align: center;
+            background: linear-gradient(180deg, var(--cream), #fff);
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .shot--hero { height: 100%; }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .stat {
+            background: linear-gradient(145deg, var(--ink) 0%, #3d3a36 100%);
+            color: #fff;
+            border-radius: var(--radius);
+            text-align: center;
+            padding: 14px 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat b {
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.1rem;
+            font-weight: 600;
+            line-height: 1;
+            color: var(--sage-light);
+        }
+
+        .stat span { font-size: .85rem; opacity: .88; margin-top: 6px; display: block; }
+
+        .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; min-height: 0; }
+
+        .api-line {
+            font-size: .92rem;
+            color: var(--muted);
+            padding: 12px 16px;
+            background: var(--cream);
+            border-radius: 10px;
+            border: 1px dashed var(--border);
+            line-height: 1.5;
+        }
+
+        /* Path */
+        .path {
+            display: flex; align-items: center; justify-content: center;
+            flex-wrap: wrap; gap: 5px; flex-shrink: 0;
+            padding: 10px;
+            background: var(--cream);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .path span:not(.arr) {
+            padding: 7px 13px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: .9rem;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(0,0,0,.04);
+        }
+
+        .path .arr { color: var(--sage); font-weight: 700; font-size: 1.1rem; }
+
+        .ui-grid {
+            flex: 1; min-height: 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        /* Tables */
+        .table-wrap {
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: #fff;
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: .98rem; }
+        th, td { padding: 11px 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+        th {
+            background: linear-gradient(180deg, var(--cream), #eeebe6);
+            font-size: .75rem;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--sage-dark);
+            font-weight: 700;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        .ok { color: var(--ok); font-weight: 700; }
+
+        /* PSA cards */
+        .psa { display: flex; flex-direction: column; gap: 10px; }
+
+        .psa-card {
+            display: grid;
+            grid-template-columns: 110px 1fr;
+            gap: 14px;
+            padding: 16px 18px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .psa-card .label {
+            font-size: .78rem;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            font-weight: 700;
+            color: var(--sage-dark);
+            padding-top: 2px;
+        }
+
+        .psa-card p { font-size: .94rem; line-height: 1.48; }
+
+        /* Chips */
+        .chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; flex-shrink: 0; }
+
+        .chip {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            font-size: .88rem;
+            box-shadow: var(--shadow);
+        }
+
+        .chip strong { display: block; color: var(--ok); font-size: 1.25rem; margin-bottom: 4px; font-weight: 700; }
+        .chip small { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; }
+
+        .test-shots {
+            flex: 1; min-height: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+
+        .checklist { list-style: none; }
+        .checklist li {
+            padding: 4px 0 4px 22px;
+            position: relative;
+            font-size: .92rem;
+            line-height: 1.45;
+        }
+        .checklist li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--sage);
+            font-weight: 700;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .demo-check { list-style: none; font-size: 1rem; line-height: 1.85; margin-top: 8px; }
+        .demo-check li { padding-left: 4px; }
+        .demo-check li::before { content: '□ '; color: var(--sage); font-weight: 700; }
+
+        .thanks {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            margin-top: 18px;
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .persp {
+            margin-top: 12px;
+            padding: 12px 16px;
+            font-size: .92rem;
+            color: var(--muted);
+            background: var(--cream);
+            border-radius: 10px;
+            border-left: 3px solid var(--sage);
+        }
+
+        code {
+            font-size: .88em;
+            background: rgba(139,148,127,.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--ink);
+        }
+
+        .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: rgba(0,0,0,.15); z-index: 99; }
+        .progress-bar { height: 100%; background: linear-gradient(90deg, var(--sage-dark), var(--sage-light)); transition: width .25s ease; }
+        .nav-hint { position: fixed; bottom: 6px; right: 12px; font-size: 11px; color: rgba(255,255,255,.35); z-index: 99; pointer-events: none; }
+
+        @media print {
+            html, body { overflow: visible; }
+            .slide { display: flex !important; position: relative; page-break-after: always; height: 100vh; }
+            .nav-hint, .progress { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="nav-hint">← → пробел · F11 · Ctrl+P → PDF</div>
+
+    <div class="deck" id="deck">
+
+        <!-- 1 · Титул -->
+        <section class="slide active title-slide">
+            <div class="title-bg"><img src="images/image24.png" alt=""></div>
+            <div class="title-overlay"></div>
+            <div class="title-content">
+                <p class="title-badge">Индивидуальный практико-ориентированный проект</p>
+                <h1>Веб-приложение интернет-магазина «Съедобное &amp; Несъедобное» с лендингом на Golang и PostgreSQL</h1>
+                <p class="title-sub">Предметная область: веб-разработка, базы данных, информационные системы</p>
+                <div class="title-meta">
+                    <strong>Зотов Владислав Сергеевич</strong> · группа РПО/1<br>
+                    Руководитель: <strong>Макаров Максим Николаевич</strong><br>
+                    ММКЦТ «Академия ТОП» · Санкт-Петербург · 2026
+                </div>
+            </div>
+            <div class="slide-footer">
+                <span class="footer-tag">Защита индивидуального проекта разработчика</span>
+                <span class="badge-num">1 / 10</span>
+            </div>
+        </section>
+
+        <!-- 2 · Кратко о проекте -->
+        <section class="slide">
+            <header class="chrome">
+                <div class="brand">Съедобное &amp; Несъедобное <span>Защита проекта</span></div>
+                <span class="badge-num">2 / 10</span>
+            </header>
+            <div class="slide-main">
+                <div class="slide-head slide-head--compact">
+                    <h2>Кратко о проекте</h2>
+                    <p class="slide-lead">Клиент–серверный интернет-магазин handmade-подарков на Go и PostgreSQL.</p>
+                    <p class="say">20–30 сек: что это, для кого, зачем.</p>
+                </div>
+                <div class="slide-body cols cols--55-45">
+                    <div>
+                        <div class="tz-grid-2x2">
+                            <div class="panel">
+                                <h3>Что разработано</h3>
+                                <p>Лендинг, каталог, корзина, заказы, кабинет, отзывы, админ-панель. REST API + PostgreSQL.</p>
+                            </div>
+                            <div class="panel">
+                                <h3>Для кого</h3>
+                                <p>Покупатели подарков и администратор магазина.</p>
+                            </div>
+                            <div class="panel">
+                                <h3>Какую задачу решает</h3>
+                                <p>Автоматизирует приём заказов вместо ручной обработки в мессенджерах.</p>
+                            </div>
+                            <div class="panel">
+                                <h3>Результат</h3>
+                                <p>Покупатель оформляет заказ и видит статус. Админ ведёт каталог и заказы.</p>
+                            </div>
+                        </div>
+                        <p class="tz-goal"><strong>Цель достигнута:</strong> работающее веб-приложение с JWT, OAuth и подтверждением email.</p>
+                    </div>
+                    <figure class="shot shot--hero shot--fill">
+                        <img src="images/image24.png" alt="Лендинг">
+                        <figcaption>Рис. 2.11 — лендинг</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-tag">MPA + REST API + PostgreSQL</span>
+                <span>github.com/Resolushh/Project_Landing</span>
+            </footer>
+        </section>
+
+        <!-- 3 · Функционал -->
+        <section class="slide">
+            <header class="chrome">
+                <div class="brand">Съедобное &amp; Несъедобное <span>Функционал</span></div>
+                <span class="badge-num">3 / 10</span>
+            </header>
+            <div class="slide-main">
+                <div class="slide-head slide-head--compact">
+                    <h2>Основной функционал</h2>
+                    <p class="slide-lead">Только реализованные возможности по ролям <strong>user</strong> и <strong>admin</strong>.</p>
+                </div>
+                <div class="slide-body func-compact">
+                    <div class="roles">
+                        <div class="panel">
+                            <h3>Покупатель</h3>
+                            <ul>
+                                <li>Каталог и корзина (в т.ч. без регистрации)</li>
+                                <li>Регистрация, OAuth Google/VK, email</li>
+                                <li>Кабинет: профиль, заказы, отзывы с фото</li>
+                                <li>Оформление заказа и отслеживание статуса</li>
+                            </ul>
+                        </div>
+                        <div class="panel">
+                            <h3>Администратор</h3>
+                            <ul>
+                                <li>CRUD товаров, изображения, теги</li>
+                                <li>Управление статусами заказов</li>
+                                <li>Модерация отзывов</li>
+                                <li>Контент бренда · доступ по роли admin</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="stats">
+                        <div class="stat"><b>9</b><span>HTML-страниц</span></div>
+                        <div class="stat"><b>19</b><span>SQL-миграций</span></div>
+                        <div class="stat"><b>8</b><span>модулей backend</span></div>
+                        <div class="stat"><b>18</b><span>сценариев Pass</span></div>
+                    </div>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-tag">Реализовано и проверено</span>
+                <span>auth · shop · cart · reviews · brand</span>
+            </footer>
+        </section>
+
+        <!-- 4 · Сценарий + интерфейс -->
+        <section class="slide">
+            <header class="chrome">
+                <div class="brand">Съедобное &amp; Несъедобное <span>Интерфейс</span></div>
+                <span class="badge-num">4 / 10</span>
+            </header>
+            <div class="slide-main">
+                <div class="slide-head slide-head--compact">
+                    <h2>Сценарий пользователя и интерфейс</h2>
+                    <p class="slide-lead">Главный путь покупателя — от лендинга до отзыва.</p>
+                </div>
+                <div class="slide-body">
+                    <div class="path">
+                        <span>Лендинг</span><span class="arr">→</span>
+                        <span>Каталог</span><span class="arr">→</span>
+                        <span>Корзина</span><span class="arr">→</span>
+                        <span>Вход</span><span class="arr">→</span>
+                        <span>Заказ</span><span class="arr">→</span>
+                        <span>Кабинет</span><span class="arr">→</span>
+                        <span>Отзыв</span>
+                    </div>
+                    <div class="ui-strip">
+                        <figure class="shot shot--fill"><img src="images/image24.png" alt=""><figcaption>landing</figcaption></figure>
+                        <figure class="shot shot--fill"><img src="images/image27.png" alt=""><figcaption>shop</figcaption></figure>
+                        <figure class="shot shot--fill"><img src="images/image3.png" alt=""><figcaption>cart</figcaption></figure>
+                        <figure class="shot shot--fill"><img src="images/image5.png" alt=""><figcaption>cabinet</figcaption></figure>
+                    </div>
+                    <p class="status-inline">
+                        <strong>Статусы заказа:</strong>
+                        <code>awaiting_payment</code><span class="arr">→</span>
+                        <code>awaiting_confirmation</code><span class="arr">→</span>
+                        <code>in_progress</code><span class="arr">→</span>
+                        <code>in_delivery</code><span class="arr">→</span>
+                        <code>delivered</code>
+                        <span style="margin-left:6px">· админ меняет в admin.html · покупатель видит в cabinet.html</span>
+                    </p>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-tag">Скриншоты из пояснительной записки</span>
+                <span>рис. 2.11–2.18</span>
+            </footer>
+        </section>
+
+        <!-- 5 · Архитектура -->
+        <section class="slide">
+            <header class="chrome">
+                <div class="brand">Съедобное &amp; Несъедобное <span>Архитектура</span></div>
+                <span class="badge-num">5 / 10</span>
+            </header>
+            <div class="slide-main">
+                <div class="slide-head slide-head--compact">
+                    <h2>Архитектура и логика работы</h2>
+                    <p class="slide-lead">Клиент–сервер: MPA → Go REST API → PostgreSQL.</p>
+                </div>
+                <div class="slide-body">
+                    <div class="arch-layout">
+                        <div class="arch-details">
+                            <div class="arch-block">
+                                <h3>Клиент–сервер</h3>
+                                <p>Браузер (MPA, 9 HTML-страниц) ↔ Go REST API ↔ PostgreSQL. Статика <code>frontend/</code> и API — один сервер. Dev: Vite проксирует <code>/api</code>.</p>
+                            </div>
+                            <div class="arch-block">
+                                <h3>Слои backend</h3>
+                                <div class="arch-layers">
+                                    <div class="arch-layer">Handler</div>
+                                    <span class="arch-layer-arrow">→</span>
+                                    <div class="arch-layer">Service</div>
+                                    <span class="arch-layer-arrow">→</span>
+                                    <div class="arch-layer">Repository</div>
+                                    <span class="arch-layer-arrow">→</span>
+                                    <div class="arch-layer">PostgreSQL</div>
+                                </div>
+                                <p style="margin-top:8px;font-size:.84rem;color:var(--muted)">HTTP/JSON → бизнес-логика и транзакции → SQL через pgx · 19 миграций</p>
+                            </div>
+                            <div class="arch-block">
+                                <h3>Модули и middleware</h3>
+                                <div class="arch-tags">
+                                    <span class="arch-tag"><b>auth</b> JWT · OAuth</span>
+                                    <span class="arch-tag"><b>shop</b> каталог · заказы</span>
+                                    <span class="arch-tag"><b>cart</b> гость · merge</span>
+                                    <span class="arch-tag"><b>reviews</b> модерация</span>
+                                    <span class="arch-tag"><b>brand</b> контент</span>
+                                    <span class="arch-tag"><b>verify</b> email</span>
+                                    <span class="arch-tag"><b>middleware</b> JWT · admin · CORS</span>
+                                </div>
+                            </div>
+                            <div class="arch-block">
+                                <h3>Пример запроса</h3>
+                                <ul>
+                                    <li><code>POST /api/orders</code> — JWT → Service → транзакция → orders + order_items</li>
+                                    <li><code>GET /api/admin/*</code> — только роль admin (403 иначе)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <figure class="shot arch-shot">
+                            <img src="images/image9.png" alt="Клиент–серверная архитектура">
+                            <figcaption>Рис. 2.3 — клиент–серверная архитектура</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-tag">Handler → Service → Repository · модульная структура</span>
+                <span>рис. 2.3</span>
+            </footer>
+        </section>
+
+        <!-- 6 · Стек -->
+        <section class="slide">
+            <header class="chrome">
+                <div class="brand">Съедобное &amp; Несъедобное <span>Стек</span></div>
+                <span class="badge-num">6 / 10</span>
+            </header>
+            <div class="slide-main">
+                <div class="slide-head slide-head--compact">
+                    <h2>Стек технологий</h2>
+                    <p class="slide-lead">Обоснование выбора (табл. 1.5 записки).</p>
+                </div>
+                <div class="slide-body stack-page">
+                    <div class="stack-layout">
+                        <div class="stack-table table-wrap">
+                            <table>
+                                <thead><tr><th>Компонент</th><th>Технологии</th><th>Зачем выбрано</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Backend</td><td>Go 1.26 · net/http</td><td>Быстрый REST API, строгая типизация, stdlib</td></tr>
+                                    <tr><td>База данных</td><td>PostgreSQL · pgx</td><td>Транзакции, FK, CHECK, миграции</td></tr>
+                                    <tr><td>Безопасность</td><td>JWT · bcrypt · OAuth</td><td>Auth без сессий, хеш паролей, Google/VK</td></tr>
+                                    <tr><td>Frontend</td><td>HTML · CSS · JS</td><td>MPA без React — достаточно для магазина</td></tr>
+                                    <tr><td>Dev</td><td>Vite 6 · .env</td><td>Прокси /api, конфигурация окружения</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <figure class="shot stack-shot">
+                            <img src="images/image25.png" alt="Структура проекта">
+                            <figcaption>Рис. 2.2 — backend/ + frontend/</figcaption>
+                        </figure>
+                    </div>
+                    <div class="stack-tools">
+                        <strong>Инструменты:</strong>
+                        <span class="pill">Go</span>
+                        <span class="pill">PostgreSQL</span>
+                        <span class="pill">pgAdmin</span>
+                        <span class="pill">Postman</span>
+                        <span class="pill">Chrome DevTools</span>
+                        <span class="pill">GitHub</span>
+                        <span style="margin-left:auto">github.com/Resolushh/Project_Landing</span>
+                    </div>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-tag">Клиент–сервер · MPA + REST + PostgreSQL</span>
+                <span>README в репозитории</span>
+            </footer>
+        </section>
+
+        <!-- 7 · Сложное решение (ТЗ: проблема → решение → результат) -->
+        <section class="slide">
+            <header class="chrome">
+                <div class="brand">Съедобное &amp; Несъедобное <span>Техническое решение</span></div>
+                <span class="badge-num">7 / 10</span>
+            </header>
+            <div class="slide-main">
+                <div class="slide-head slide-head--compact">
+                    <h2>Самое сложное техническое решение</h2>
+                    <p class="slide-lead">Гостевая корзина и слияние при авторизации.</p>
+                    <p class="say">Проблема → решение → результат.</p>
+                </div>
+                <div class="slide-body cols cols--55-45">
+                    <div class="psa">
+                        <div class="psa-card">
+                            <div class="label">Проблема</div>
+                            <p>Покупатель добавляет товары без регистрации. При входе нельзя потерять корзину и получить дубли.</p>
+                        </div>
+                        <div class="psa-card">
+                            <div class="label">Решение</div>
+                            <p><code>CartSession</code> + <code>session_id</code>. После логина <code>POST /api/cart/merge</code> объединяет корзины в транзакции PostgreSQL.</p>
+                        </div>
+                        <div class="psa-card">
+                            <div class="label">Результат</div>
+                            <p>Товары сохраняются между сеансами. После входа — актуальная корзина и оформление заказа.</p>
+                        </div>
+                    </div>
+                    <figure class="shot shot--fill">
+                        <img src="images/image3.png" alt="Корзина">
+                        <figcaption>Рис. 2.14 — cart.html</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-tag">Показать личный вклад и умение решать нетривиальные задачи</span>
+                <span>cart · middleware · транзакции</span>
+            </footer>
+        </section>
+
+        <!-- 8 · Тестирование (ТЗ: что / как / результат) -->
+        <section class="slide">
+            <header class="chrome">
+                <div class="brand">Съедобное &amp; Несъедобное <span>Тестирование</span></div>
+                <span class="badge-num">8 / 10</span>
+            </header>
+            <div class="slide-main">
+                <div class="slide-head slide-head--compact">
+                    <h2>Тестирование работоспособности</h2>
+                    <p class="slide-lead">Функциональное, модульное, проверка безопасности (глава 3).</p>
+                </div>
+                <div class="slide-body">
+                    <div class="table-wrap" style="flex-shrink:0">
+                        <table>
+                            <thead><tr><th>Что проверяли</th><th>Как</th><th>Результат</th></tr></thead>
+                            <tbody>
+                                <tr><td>Запуск и API</td><td><code>go test ./internal/startupcheck/...</code></td><td class="ok">6/6 PASS</td></tr>
+                                <tr><td>Сценарий покупателя</td><td>18 сценариев · браузер + Postman</td><td class="ok">Pass</td></tr>
+                                <tr><td>Работа с БД</td><td>заказы, корзина, миграции</td><td class="ok">Pass</td></tr>
+                                <tr><td>Безопасность</td><td>без JWT → 401 · user → admin → 403 · bcrypt</td><td class="ok">Pass</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="test-shots">
+                        <figure class="shot shot--fill"><img src="images/image12.png" alt=""><figcaption>Рис. 3.1 — заказ в кабинете</figcaption></figure>
+                        <figure class="shot shot--fill"><img src="images/image8.png" alt=""><figcaption>Рис. 3.3 — go test PASS</figcaption></figure>
+                        <figure class="shot shot--fill"><img src="images/image10.png" alt=""><figcaption>Рис. 3.4 — Postman · GET /api/products</figcaption></figure>
+                    </div>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-tag">Критерий: фактический результат = ожидаемый</span>
+                <span>Chrome DevTools · pgAdmin · go test</span>
+            </footer>
+        </section>
+
+        <!-- 9 · Итог (ТЗ: что получилось, что освоил, перспективы 2–3) -->
+        <section class="slide">
+            <header class="chrome">
+                <div class="brand">Съедобное &amp; Несъедобное <span>Итог</span></div>
+                <span class="badge-num">9 / 10</span>
+            </header>
+            <div class="slide-main">
+                <div class="slide-head slide-head--compact">
+                    <h2>Итоговый результат</h2>
+                    <p class="slide-lead">Работоспособный прототип: каталог → корзина → заказ → администрирование.</p>
+                </div>
+                <div class="slide-body cols cols--50-50">
+                    <div>
+                        <div class="result-grid">
+                            <div class="panel">
+                                <h3>Что получилось</h3>
+                                <ul class="checklist">
+                                    <li>9 страниц, REST API, PostgreSQL</li>
+                                    <li>JWT, OAuth, email-верификация</li>
+                                    <li>18 сценариев — Pass</li>
+                                    <li>Код и документация на GitHub</li>
+                                </ul>
+                            </div>
+                            <div class="panel">
+                                <h3>Что освоил</h3>
+                                <ul class="checklist">
+                                    <li>Проектирование БД и миграции</li>
+                                    <li>REST API на Go (H→S→R)</li>
+                                    <li>Аутентификация и роли</li>
+                                    <li>Тестирование клиент–сервер</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="persp"><strong>Перспективы:</strong> оплата · доставка · деплой с HTTPS</p>
+                    </div>
+                    <figure class="shot shot--hero shot--fill">
+                        <img src="images/image27.png" alt="Магазин">
+                        <figcaption>Рис. 2.12 — каталог товаров shop.html</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-tag">Практическая значимость: готовый прототип для малого бизнеса и учебный образец</span>
+                <span>Цель достигнута</span>
+            </footer>
+        </section>
+
+        <!-- 10 · Демо (ТЗ: live + спасибо + вопросы) -->
+        <section class="slide">
+            <header class="chrome">
+                <div class="brand">Съедобное &amp; Несъедобное <span>Демонстрация</span></div>
+                <span class="badge-num">10 / 10</span>
+            </header>
+            <div class="slide-main">
+                <div class="slide-head slide-head--compact">
+                    <h2>Демонстрация проекта</h2>
+                    <p class="slide-lead">Live-демо на <strong>localhost</strong> — основной сценарий покупателя.</p>
+                    <p class="say">PostgreSQL · <code>go run ./cmd/server</code> · admin в .env</p>
+                </div>
+                <div class="slide-body cols cols--50-50">
+                    <div>
+                        <div class="panel">
+                            <h3>Чеклист демо</h3>
+                            <ul class="demo-check">
+                                <li>Лендинг → магазин → корзина (гость)</li>
+                                <li>Вход → корзина сохранилась</li>
+                                <li>Заказ → статус в кабинете</li>
+                                <li>Админ → смена статуса</li>
+                            </ul>
+                        </div>
+                        <p class="thanks">Спасибо за внимание!</p>
+                        <p style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--sage-dark);margin-top:4px">Вопросы?</p>
+                    </div>
+                    <figure class="shot shot--hero shot--fill">
+                        <img src="images/image24.png" alt="Демо">
+                        <figcaption>Готов показать проект в работе</figcaption>
+                    </figure>
+                </div>
+            </div>
+            <footer class="slide-footer">
+                <span class="footer-tag">Зотов Владислав Сергеевич · РПО/1 · 2026</span>
+                <span>Макаров М. Н. · Академия ТОП</span>
+            </footer>
+        </section>
+
+    </div>
+
+    <script>
+        const slides = [...document.querySelectorAll('.slide')];
+        const bar = document.getElementById('progressBar');
+        let cur = 0;
+
+        function show(i) {
+            cur = Math.max(0, Math.min(i, slides.length - 1));
+            slides.forEach((s, n) => s.classList.toggle('active', n === cur));
+            bar.style.width = ((cur + 1) / slides.length * 100) + '%';
+        }
+
+        document.addEventListener('keydown', e => {
+            if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); show(cur + 1); }
+            if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); show(cur - 1); }
+            if (e.key === 'Home') show(0);
+            if (e.key === 'End') show(slides.length - 1);
+        });
+
+        let tx = 0;
+        document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+        document.addEventListener('touchend', e => {
+            const d = e.changedTouches[0].clientX - tx;
+            if (d < -50) show(cur + 1);
+            if (d > 50) show(cur - 1);
+        });
+
+        show(0);
+    </script>
+</body>
+</html>
