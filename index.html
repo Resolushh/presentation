@@ -264,22 +264,114 @@
             flex: 1;
             min-height: 0;
             display: grid;
-            grid-template-columns: 46% 54%;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
             gap: 22px;
             align-items: stretch;
         }
 
-        .stack-table {
-            height: 100%;
+        .stack-matrix {
+            flex: 1;
+            min-height: 0;
             display: flex;
+            flex-direction: column;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: #fff;
+        }
+
+        .stack-matrix__head,
+        .stack-matrix__row {
+            display: grid;
+            grid-template-columns: 152px minmax(0, 1fr) minmax(0, 1.2fr);
+            column-gap: 16px;
+            padding: 0 18px;
+        }
+
+        .stack-matrix__head {
             align-items: center;
         }
 
-        .stack-table table { font-size: 1.02rem; }
-        .stack-table th, .stack-table td { padding: 13px 16px; }
-        .stack-table td:first-child { font-weight: 600; white-space: nowrap; width: 1%; }
-        .stack-table td:nth-child(2) { white-space: nowrap; font-size: .98rem; color: var(--sage-dark); }
-        .stack-table td:last-child { font-size: .98rem; line-height: 1.45; color: var(--muted); }
+        .stack-matrix__row {
+            align-items: start;
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        .stack-matrix__head {
+            flex-shrink: 0;
+            min-height: 44px;
+            background: linear-gradient(180deg, var(--cream), #eeebe6);
+            border-bottom: 1px solid var(--border);
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--sage-dark);
+            font-weight: 700;
+        }
+
+        .stack-matrix__body {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stack-matrix__row {
+            flex: 1;
+            min-height: 52px;
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+        }
+
+        .stack-matrix__row:last-child { border-bottom: none; }
+
+        .stack-matrix__row:nth-child(even) { background: #fcfbfa; }
+
+        .stack-matrix__comp {
+            font-weight: 700;
+            font-size: .96rem;
+            color: var(--ink);
+            line-height: 1.25;
+            white-space: nowrap;
+            min-width: 0;
+        }
+
+        .stack-matrix__tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .stack-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(139, 148, 127, .12);
+            border: 1px solid rgba(139, 148, 127, .22);
+            font-size: .82rem;
+            font-weight: 600;
+            color: var(--sage-dark);
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .stack-matrix__why {
+            font-size: .9rem;
+            line-height: 1.42;
+            color: var(--muted);
+            min-width: 0;
+        }
+
+        .stack-table {
+            height: 100%;
+            min-height: 0;
+            display: flex;
+        }
 
         .stack-shot {
             height: 100%;
@@ -714,9 +806,45 @@
         .arch-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
+            grid-template-rows: auto 1fr 1fr;
             gap: 14px;
             min-height: 0;
+        }
+
+        .arch-block--layers {
+            grid-column: 1 / -1;
+        }
+
+        .arch-block--modules {
+            grid-row: 2 / 4;
+            grid-column: 1;
+            justify-content: flex-start;
+            padding: 18px 20px;
+        }
+
+        .arch-block--modules .arch-tags {
+            flex: 1;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 10px;
+            align-content: stretch;
+        }
+
+        .arch-block--modules .arch-tag {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px 10px;
+        }
+
+        .arch-block--requests {
+            grid-row: 2;
+            grid-column: 2;
+        }
+
+        .arch-block--deploy {
+            grid-row: 3;
+            grid-column: 2;
         }
 
         .arch-details {
@@ -768,25 +896,51 @@
         }
 
         .arch-layers {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+            gap: 10px;
+            align-items: stretch;
         }
 
         .arch-layer {
-            flex: 1;
-            min-width: 68px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+            min-width: 0;
             text-align: center;
-            padding: 12px 8px;
+            padding: 12px 10px;
             background: var(--cream);
             border: 1px solid var(--border);
             border-radius: 8px;
-            font-size: .98rem;
-            font-weight: 700;
+            overflow: hidden;
         }
 
-        .arch-layer-arrow { color: var(--sage); font-weight: 700; font-size: 1.1rem; }
+        .arch-layer strong {
+            font-size: .9rem;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.2;
+            overflow-wrap: anywhere;
+        }
+
+        .arch-layer small {
+            font-size: .76rem;
+            font-weight: 500;
+            color: var(--muted);
+            line-height: 1.25;
+            overflow-wrap: anywhere;
+        }
+
+        .arch-layer-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sage);
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0 2px;
+        }
 
         .arch-tags {
             display: grid;
@@ -899,6 +1053,62 @@
             text-align: center;
             background: linear-gradient(180deg, var(--cream), #fff);
             border-top: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .shot--logo-only {
+            height: 100%;
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px 24px;
+            background: var(--white);
+        }
+
+        .shot--logo-only .shot-logo {
+            flex: 0 0 auto;
+            display: block;
+            width: auto;
+            height: auto;
+            min-height: 0;
+            max-width: min(300px, 88%);
+            max-height: min(240px, 78%);
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .fig-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--ink);
+            letter-spacing: .01em;
+        }
+
+        .fig-brand__mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: #fff;
+            font-family: Inter, system-ui, sans-serif;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: -.03em;
+            color: var(--ink);
+        }
+
+        .figcaption__page {
+            font-family: Inter, system-ui, sans-serif;
+            font-size: .88rem;
+            font-weight: 500;
             color: var(--muted);
         }
 
@@ -1045,7 +1255,7 @@
             flex: 1;
             min-height: 0;
             display: grid;
-            grid-template-columns: 1fr 36%;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 48%);
             gap: 20px;
             align-items: stretch;
         }
@@ -1126,8 +1336,7 @@
             line-height: 1.48;
         }
 
-        .psa-step__text code,
-        .psa-code-row code {
+        .psa-step__text code {
             display: inline;
             white-space: nowrap;
             font-size: .95em;
@@ -1135,22 +1344,35 @@
         }
 
         .psa-code-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1.35fr;
             gap: 8px;
+            align-items: center;
             padding: 12px 14px;
             background: var(--cream);
             border: 1px solid var(--border);
             border-radius: 10px;
+        }
+
+        .psa-code-chip {
+            padding: 10px 8px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-align: center;
             font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
-            font-size: .98rem;
+            font-size: .88rem;
+            line-height: 1.25;
+            color: var(--ink);
+            word-break: break-word;
         }
 
         .psa-code-row__op {
             color: var(--sage-dark);
             font-weight: 700;
             font-family: Inter, sans-serif;
+            font-size: 1.05rem;
+            text-align: center;
         }
 
         .psa-step__body small {
@@ -1166,8 +1388,11 @@
         }
 
         .psa-shot img {
+            flex: 1;
+            width: 100%;
             height: 100%;
-            object-fit: contain;
+            min-height: 0;
+            object-fit: cover;
             object-position: top center;
             background: #fff;
         }
@@ -1388,12 +1613,6 @@
             min-height: 0;
         }
 
-        .result-shot img {
-            height: 100%;
-            object-fit: cover;
-            object-position: top center;
-        }
-
         .result-persp {
             flex-shrink: 0;
             display: grid;
@@ -1444,6 +1663,131 @@
         .demo-check li { padding-left: 4px; }
         .demo-check li::before { content: '□ '; color: var(--sage); font-weight: 700; }
 
+        .demo-slide {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .demo-run {
+            flex-shrink: 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 10px 18px;
+            padding: 12px 18px;
+            background: linear-gradient(90deg, rgba(42,40,38,.05), rgba(139,148,127,.12));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: .98rem;
+            color: var(--muted);
+        }
+
+        .demo-run strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .demo-layout {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: 1fr 38%;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .demo-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 0;
+        }
+
+        .demo-step {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .demo-step__num {
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--sage-dark);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: .95rem;
+        }
+
+        .demo-step__text {
+            font-size: 1.08rem;
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--text);
+        }
+
+        .demo-step__text small {
+            display: block;
+            margin-top: 3px;
+            font-size: .92rem;
+            font-weight: 400;
+            color: var(--muted);
+        }
+
+        .demo-shot {
+            height: 100%;
+            min-height: 0;
+        }
+
+        .demo-close {
+            flex-shrink: 0;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            column-gap: 32px;
+            padding: 22px 36px;
+            background: linear-gradient(135deg, rgba(42,40,38,.06), rgba(139,148,127,.12));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .demo-close__thanks {
+            justify-self: start;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.85rem;
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1.15;
+        }
+
+        .demo-close__meta {
+            justify-self: end;
+            text-align: right;
+            font-size: .9rem;
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        .demo-close__meta strong {
+            display: block;
+            color: var(--ink);
+            font-weight: 600;
+        }
+
         .thanks {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.5rem;
@@ -1475,15 +1819,13 @@
         .nav-hint { position: fixed; bottom: 6px; right: 12px; font-size: 12px; color: rgba(42, 40, 38, .35); z-index: 99; pointer-events: none; }
 
         @media print {
-            html, body { overflow: visible; }
-            .slide { display: flex !important; position: relative; page-break-after: always; height: 100vh; }
-            .nav-hint, .progress { display: none; }
+            body { display: none !important; }
         }
     </style>
 </head>
 <body>
     <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
-    <div class="nav-hint">← → пробел · F11 · Ctrl+P → PDF</div>
+    <div class="nav-hint">← → пробел · F11</div>
 
     <div class="deck" id="deck">
 
@@ -1725,20 +2067,19 @@
                     </div>
                     <div class="arch-layout">
                         <div class="arch-grid">
-                            <div class="arch-block">
+                            <div class="arch-block arch-block--layers">
                                 <h3>Слои backend</h3>
                                 <div class="arch-layers">
-                                    <div class="arch-layer">Handler</div>
+                                    <div class="arch-layer"><strong>Handler</strong><small>HTTP / JSON</small></div>
                                     <span class="arch-layer-arrow">→</span>
-                                    <div class="arch-layer">Service</div>
+                                    <div class="arch-layer"><strong>Service</strong><small>бизнес-логика</small></div>
                                     <span class="arch-layer-arrow">→</span>
-                                    <div class="arch-layer">Repository</div>
+                                    <div class="arch-layer"><strong>Repo</strong><small>SQL-запросы</small></div>
                                     <span class="arch-layer-arrow">→</span>
-                                    <div class="arch-layer">PostgreSQL</div>
+                                    <div class="arch-layer"><strong>Postgres</strong><small>транзакции · pgx</small></div>
                                 </div>
-                                <p style="margin-top:10px;font-size:.95rem;color:var(--muted)">HTTP/JSON → бизнес-логика → SQL-транзакции</p>
                             </div>
-                            <div class="arch-block">
+                            <div class="arch-block arch-block--modules">
                                 <h3>Модули backend</h3>
                                 <div class="arch-tags">
                                     <span class="arch-tag"><b>auth</b> · JWT, OAuth</span>
@@ -1749,14 +2090,14 @@
                                     <span class="arch-tag"><b>verify</b> · email</span>
                                 </div>
                             </div>
-                            <div class="arch-block">
+                            <div class="arch-block arch-block--requests">
                                 <h3>Примеры запросов</h3>
                                 <div class="arch-req">
                                     <div class="arch-req__item"><code>POST /api/orders</code> — JWT → Service → транзакция → orders + order_items</div>
                                     <div class="arch-req__item"><code>GET /api/admin/*</code> — только роль admin, иначе 403</div>
                                 </div>
                             </div>
-                            <div class="arch-block">
+                            <div class="arch-block arch-block--deploy">
                                 <h3>Развёртывание</h3>
                                 <p>Статика <code>frontend/</code> и API — один Go-сервер.</p>
                                 <p style="margin-top:8px">Dev: Vite проксирует <code>/api</code> · middleware: JWT, admin, CORS</p>
@@ -1788,17 +2129,58 @@
                 </div>
                 <div class="slide-body stack-page">
                     <div class="stack-layout">
-                        <div class="stack-table table-wrap">
-                            <table>
-                                <thead><tr><th>Компонент</th><th>Технологии</th><th>Зачем выбрано</th></tr></thead>
-                                <tbody>
-                                    <tr><td>Backend</td><td>Go 1.26 · net/http</td><td>Быстрый REST API, строгая типизация, stdlib</td></tr>
-                                    <tr><td>База данных</td><td>PostgreSQL · pgx</td><td>Транзакции, FK, CHECK, миграции</td></tr>
-                                    <tr><td>Безопасность</td><td>JWT · bcrypt · OAuth</td><td>Auth без сессий, хеш паролей, Google/VK</td></tr>
-                                    <tr><td>Frontend</td><td>HTML · CSS · JS</td><td>MPA без React — достаточно для магазина</td></tr>
-                                    <tr><td>Dev</td><td>Vite 6 · .env</td><td>Прокси /api, конфигурация окружения</td></tr>
-                                </tbody>
-                            </table>
+                        <div class="stack-table">
+                            <div class="stack-matrix">
+                                <div class="stack-matrix__head">
+                                    <span>Компонент</span>
+                                    <span>Технологии</span>
+                                    <span>Зачем выбрано</span>
+                                </div>
+                                <div class="stack-matrix__body">
+                                    <div class="stack-matrix__row">
+                                        <div class="stack-matrix__comp">Backend</div>
+                                        <div class="stack-matrix__tech">
+                                            <span class="stack-chip">Go 1.26</span>
+                                            <span class="stack-chip">net/http</span>
+                                        </div>
+                                        <div class="stack-matrix__why">Быстрый REST API, строгая типизация, stdlib</div>
+                                    </div>
+                                    <div class="stack-matrix__row">
+                                        <div class="stack-matrix__comp">База данных</div>
+                                        <div class="stack-matrix__tech">
+                                            <span class="stack-chip">PostgreSQL</span>
+                                            <span class="stack-chip">pgx</span>
+                                        </div>
+                                        <div class="stack-matrix__why">Транзакции, FK, CHECK, миграции</div>
+                                    </div>
+                                    <div class="stack-matrix__row">
+                                        <div class="stack-matrix__comp">Безопасность</div>
+                                        <div class="stack-matrix__tech">
+                                            <span class="stack-chip">JWT</span>
+                                            <span class="stack-chip">bcrypt</span>
+                                            <span class="stack-chip">OAuth</span>
+                                        </div>
+                                        <div class="stack-matrix__why">Auth без сессий, хеш паролей, Google/VK</div>
+                                    </div>
+                                    <div class="stack-matrix__row">
+                                        <div class="stack-matrix__comp">Frontend</div>
+                                        <div class="stack-matrix__tech">
+                                            <span class="stack-chip">HTML</span>
+                                            <span class="stack-chip">CSS</span>
+                                            <span class="stack-chip">JS</span>
+                                        </div>
+                                        <div class="stack-matrix__why">MPA без React — достаточно для магазина</div>
+                                    </div>
+                                    <div class="stack-matrix__row">
+                                        <div class="stack-matrix__comp">Dev</div>
+                                        <div class="stack-matrix__tech">
+                                            <span class="stack-chip">Vite 6</span>
+                                            <span class="stack-chip">.env</span>
+                                        </div>
+                                        <div class="stack-matrix__why">Прокси /api, конфигурация окружения</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <figure class="shot stack-shot">
                             <img src="images/image25.png" alt="Структура проекта">
@@ -1864,11 +2246,11 @@
                                 </div>
                                 <div class="psa-step__body">
                                     <div class="psa-code-row">
-                                        <code>CartSession</code>
+                                        <span class="psa-code-chip">CartSession</span>
                                         <span class="psa-code-row__op">+</span>
-                                        <code>session_id</code>
+                                        <span class="psa-code-chip">session_id</span>
                                         <span class="psa-code-row__op">→</span>
-                                        <code>POST /api/cart/merge</code>
+                                        <span class="psa-code-chip">POST /api/cart/merge</span>
                                     </div>
                                     <p class="psa-step__text">Гостевая корзина сохраняется, после логина — слияние без дублей</p>
                                     <small>объединение корзин в одной PostgreSQL-транзакции через pgx</small>
@@ -1885,7 +2267,7 @@
                                 </div>
                             </div>
                         </div>
-                        <figure class="shot psa-shot">
+                        <figure class="shot psa-shot shot--fill">
                             <img src="images/image2.png" alt="Корзина cart.html">
                             <figcaption>Рис. 2.14 — cart.html</figcaption>
                         </figure>
@@ -1997,9 +2379,8 @@
                                 </ul>
                             </div>
                         </div>
-                        <figure class="shot result-shot shot--fill">
-                            <img src="images/image24.png" alt="Каталог shop.html">
-                            <figcaption>Рис. 2.12 — shop.html</figcaption>
+                        <figure class="shot shot--logo-only result-shot">
+                            <img src="images/logo.svg" alt="Съедобное &amp; Несъедобное" class="shot-logo">
                         </figure>
                     </div>
                     <div class="result-persp">
@@ -2028,26 +2409,49 @@
                 <div class="slide-head slide-head--compact">
                     <h2>Демонстрация проекта</h2>
                     <p class="slide-lead">Live-демо на <strong>localhost</strong> — основной сценарий покупателя.</p>
-                    <p class="say">PostgreSQL · <code>go run ./cmd/server</code> · admin в .env</p>
                 </div>
-                <div class="slide-body cols cols--50-50">
-                    <div>
-                        <div class="panel">
-                            <h3>Чеклист демо</h3>
-                            <ul class="demo-check">
-                                <li>Лендинг → магазин → корзина (гость)</li>
-                                <li>Вход → корзина сохранилась</li>
-                                <li>Заказ → статус в кабинете</li>
-                                <li>Админ → смена статуса</li>
-                            </ul>
-                        </div>
-                        <p class="thanks">Спасибо за внимание!</p>
-                        <p style="font-family:'Cormorant Garamond',serif;font-size:1.85rem;color:var(--sage-dark);margin-top:4px">Вопросы?</p>
+                <div class="slide-body demo-slide">
+                    <div class="demo-run">
+                        <strong>Запуск:</strong>
+                        <code>go run ./cmd/server</code>
+                        <span>·</span>
+                        <span>PostgreSQL + миграции</span>
+                        <span>·</span>
+                        <span>admin в <code>.env</code></span>
+                        <span>·</span>
+                        <span><strong>localhost</strong></span>
                     </div>
-                    <figure class="shot shot--hero shot--fill">
-                        <img src="images/image26.png" alt="Лендинг">
-                        <figcaption>landing.html — старт демо</figcaption>
-                    </figure>
+                    <div class="demo-layout">
+                        <div class="demo-steps">
+                            <div class="demo-step">
+                                <span class="demo-step__num">1</span>
+                                <span class="demo-step__text">Лендинг → магазин → корзина<small>гостевой сценарий без входа</small></span>
+                            </div>
+                            <div class="demo-step">
+                                <span class="demo-step__num">2</span>
+                                <span class="demo-step__text">Вход / регистрация<small>корзина сохранилась после merge</small></span>
+                            </div>
+                            <div class="demo-step">
+                                <span class="demo-step__num">3</span>
+                                <span class="demo-step__text">Оформление заказа<small>статус отображается в cabinet.html</small></span>
+                            </div>
+                            <div class="demo-step">
+                                <span class="demo-step__num">4</span>
+                                <span class="demo-step__text">Админ-панель<small>смена статуса заказа</small></span>
+                            </div>
+                        </div>
+                        <figure class="shot shot--logo-only demo-shot">
+                            <img src="images/logo.svg" alt="Съедобное &amp; Несъедобное" class="shot-logo">
+                        </figure>
+                    </div>
+                    <div class="demo-close">
+                        <div class="demo-close__thanks">Спасибо за внимание!</div>
+                        <div class="demo-close__meta">
+                            <strong>Зотов Владислав Сергеевич</strong>
+                            РПО/1 · 2026<br>
+                            Руководитель: Макаров М. Н.
+                        </div>
+                    </div>
                 </div>
             </div>
             <footer class="slide-footer">
@@ -2070,6 +2474,10 @@
         }
 
         document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P')) {
+                e.preventDefault();
+                return;
+            }
             if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) { e.preventDefault(); show(cur + 1); }
             if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); show(cur - 1); }
             if (e.key === 'Home') show(0);
