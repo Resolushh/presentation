@@ -30,7 +30,7 @@
             height: 100%;
             overflow: hidden;
             font-family: 'Inter', system-ui, sans-serif;
-            font-size: 18px;
+            font-size: 20px;
             background: #0f0f0f;
             color: var(--text);
             -webkit-font-smoothing: antialiased;
@@ -63,20 +63,20 @@
 
         .brand {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: var(--ink);
             letter-spacing: .01em;
         }
 
-        .brand span { color: var(--sage-dark); font-weight: 500; font-family: Inter, sans-serif; font-size: .75rem; margin-left: 12px; letter-spacing: .06em; text-transform: uppercase; }
+        .brand span { color: var(--sage-dark); font-weight: 500; font-family: Inter, sans-serif; font-size: .82rem; margin-left: 12px; letter-spacing: .06em; text-transform: uppercase; }
 
         .badge-num {
-            font-size: .8rem;
+            font-size: .88rem;
             font-weight: 700;
             color: #fff;
             background: var(--sage-dark);
-            padding: 6px 14px;
+            padding: 7px 15px;
             border-radius: 999px;
         }
 
@@ -96,14 +96,14 @@
 
         h1 {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: clamp(2.2rem, 4.2vw, 3.2rem);
+            font-size: clamp(2.5rem, 4.8vw, 3.75rem);
             font-weight: 600;
             line-height: 1.12;
         }
 
         h2 {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: clamp(2rem, 3.5vw, 2.65rem);
+            font-size: clamp(2.15rem, 3.8vw, 2.9rem);
             font-weight: 600;
             color: var(--ink);
             line-height: 1.1;
@@ -124,16 +124,16 @@
         .slide-lead {
             margin-top: 6px;
             margin-left: 19px;
-            font-size: .98rem;
+            font-size: 1.12rem;
             color: var(--muted);
             max-width: 920px;
-            line-height: 1.42;
+            line-height: 1.45;
         }
 
         .say {
             margin-top: 4px;
             margin-left: 19px;
-            font-size: .8rem;
+            font-size: .95rem;
             color: var(--sage-dark);
             font-style: italic;
         }
@@ -153,7 +153,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 13px;
+            font-size: 14px;
             color: var(--muted);
             background: var(--cream);
         }
@@ -173,13 +173,26 @@
         }
 
         /* ── Title ── */
-        .title-slide { background: #000; }
+        .title-slide {
+            background:
+                radial-gradient(ellipse 70% 55% at 15% 20%, rgba(255,255,255,.85), transparent 60%),
+                radial-gradient(ellipse 50% 40% at 85% 75%, rgba(139,148,127,.18), transparent 55%),
+                linear-gradient(160deg, #f7f6f3 0%, #eef0eb 45%, #e2e8dc 100%);
+        }
 
-        .title-bg { position: absolute; inset: 0; }
-        .title-bg img { width: 100%; height: 100%; object-fit: cover; object-position: top; filter: brightness(.85); }
-        .title-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(155deg, rgba(18,16,14,.94) 0%, rgba(18,16,14,.68) 50%, rgba(92,107,82,.9) 100%);
+        .title-slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(
+                    -12deg,
+                    transparent,
+                    transparent 48px,
+                    rgba(139,148,127,.04) 48px,
+                    rgba(139,148,127,.04) 49px
+                );
+            pointer-events: none;
         }
 
         .title-content {
@@ -190,40 +203,53 @@
         }
 
         .title-badge {
-            margin-bottom: 20px;
-            padding: 9px 24px;
+            margin-bottom: 24px;
+            padding: 10px 28px;
             border-radius: 999px;
-            border: 1px solid rgba(255,255,255,.3);
-            background: rgba(255,255,255,.1);
-            backdrop-filter: blur(10px);
-            font-size: .9rem;
-            color: rgba(255,255,255,.9);
-            letter-spacing: .04em;
+            border: 1px solid rgba(109,118,98,.25);
+            background: rgba(255,255,255,.65);
+            font-size: 1rem;
+            color: var(--sage-dark);
+            letter-spacing: .06em;
             text-transform: uppercase;
+            font-weight: 600;
         }
 
-        .title-slide h1 { color: #fff; max-width: 960px; text-shadow: 0 4px 32px rgba(0,0,0,.5); }
-        .title-sub { margin-top: 16px; font-size: 1.15rem; color: rgba(255,255,255,.75); max-width: 700px; line-height: 1.5; }
+        .title-slide h1 {
+            color: var(--ink);
+            max-width: 980px;
+            font-size: clamp(2.6rem, 5vw, 3.85rem);
+        }
+
+        .title-sub {
+            margin-top: 20px;
+            font-size: 1.28rem;
+            color: var(--muted);
+            max-width: 760px;
+            line-height: 1.55;
+        }
+
         .title-meta {
-            margin-top: 36px;
-            padding: 24px 36px;
+            margin-top: 40px;
+            padding: 26px 40px;
             border-radius: var(--radius);
-            background: rgba(255,255,255,.08);
-            border: 1px solid rgba(255,255,255,.15);
-            font-size: 1.08rem;
-            line-height: 1.85;
-            color: rgba(255,255,255,.92);
+            background: rgba(255,255,255,.72);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: var(--text);
         }
 
         .title-slide .slide-footer {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: rgba(0,0,0,.35);
-            border-top-color: rgba(255,255,255,.15);
-            color: rgba(255,255,255,.6);
-            backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 2;
+            background: rgba(255,255,255,.55);
+            border-top-color: var(--border);
+            color: var(--muted);
         }
 
-        .title-slide .badge-num { background: rgba(255,255,255,.2); }
+        .title-slide .badge-num { background: var(--sage-dark); }
 
         /* ── Layout ── */
         .cols { display: grid; gap: 18px; min-height: 0; }
@@ -249,11 +275,11 @@
             align-items: center;
         }
 
-        .stack-table table { font-size: .93rem; }
-        .stack-table th, .stack-table td { padding: 12px 14px; }
+        .stack-table table { font-size: 1.02rem; }
+        .stack-table th, .stack-table td { padding: 13px 16px; }
         .stack-table td:first-child { font-weight: 600; white-space: nowrap; width: 1%; }
-        .stack-table td:nth-child(2) { white-space: nowrap; font-size: .88rem; color: var(--sage-dark); }
-        .stack-table td:last-child { font-size: .86rem; line-height: 1.42; color: var(--muted); }
+        .stack-table td:nth-child(2) { white-space: nowrap; font-size: .98rem; color: var(--sage-dark); }
+        .stack-table td:last-child { font-size: .98rem; line-height: 1.45; color: var(--muted); }
 
         .stack-shot {
             height: 100%;
@@ -285,39 +311,169 @@
             background: var(--cream);
             border: 1px solid var(--border);
             border-radius: 12px;
-            font-size: .88rem;
+            font-size: .98rem;
             color: var(--muted);
         }
 
         .stack-tools strong { color: var(--ink); margin-right: 4px; }
         .stack-tools .pill {
-            padding: 4px 10px;
+            padding: 5px 12px;
             background: #fff;
             border: 1px solid var(--border);
             border-radius: 6px;
-            font-size: .82rem;
+            font-size: .92rem;
             color: var(--text);
         }
 
         .slide-head--compact { margin-bottom: 10px; }
-        .slide-head--compact .slide-lead { font-size: .98rem; }
-        .slide-head--compact .say { font-size: .82rem; margin-top: 4px; }
+        .slide-head--compact .slide-lead { font-size: 1.1rem; }
+        .slide-head--compact .say { font-size: .95rem; margin-top: 4px; }
 
-        /* TZ: compact blocks */
+        /* Slide 2 — Кратко о проекте */
+        .project-slide {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .project-layout {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: 1fr 36%;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 14px;
+            min-height: 0;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .project-card__head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .project-card--dev .project-card__head { background: linear-gradient(135deg, rgba(139,148,127,.2), rgba(139,148,127,.06)); }
+        .project-card--who .project-card__head { background: linear-gradient(135deg, rgba(42,40,38,.08), rgba(42,40,38,.02)); }
+        .project-card--task .project-card__head { background: linear-gradient(135deg, rgba(180,140,90,.12), rgba(180,140,90,.04)); }
+        .project-card--result .project-card__head { background: linear-gradient(135deg, rgba(26,107,52,.12), rgba(26,107,52,.04)); }
+
+        .project-card__icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .project-card--dev .project-card__icon { background: var(--sage-dark); }
+        .project-card--who .project-card__icon { background: var(--ink); }
+        .project-card--task .project-card__icon { background: #9a7b4f; }
+        .project-card--result .project-card__icon { background: var(--ok); }
+
+        .project-card__head h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.45rem;
+            font-weight: 600;
+            color: var(--ink);
+            text-transform: none;
+            letter-spacing: 0;
+            margin: 0;
+        }
+
+        .project-card__body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 16px 18px;
+            font-size: 1.08rem;
+            line-height: 1.45;
+            color: var(--text);
+        }
+
+        .project-card__body small {
+            display: block;
+            margin-top: 6px;
+            font-size: .95rem;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .project-shot {
+            height: 100%;
+            min-height: 0;
+        }
+
+        .project-shot img {
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+        }
+
+        .project-goal {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 22px;
+            font-size: 1.1rem;
+            line-height: 1.45;
+            border-left: 5px solid var(--sage);
+            background: linear-gradient(90deg, rgba(139,148,127,.14), rgba(139,148,127,.04));
+            border-radius: 0 var(--radius) var(--radius) 0;
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--sage);
+        }
+
+        .project-goal strong {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        /* TZ: compact blocks (legacy) */
         .tz-grid-2x2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
 
-        .tz-grid-2x2 .panel { padding: 14px 16px; }
-        .tz-grid-2x2 .panel p { font-size: .9rem; line-height: 1.45; }
+        .tz-grid-2x2 .panel { padding: 16px 18px; }
+        .tz-grid-2x2 .panel p { font-size: 1.02rem; line-height: 1.48; }
 
         .tz-goal {
             margin-top: 10px;
-            padding: 10px 14px;
-            font-size: .88rem;
-            line-height: 1.45;
+            padding: 12px 16px;
+            font-size: 1.02rem;
+            line-height: 1.48;
             border-left: 4px solid var(--sage);
             background: linear-gradient(90deg, rgba(139,148,127,.12), transparent);
             border-radius: 0 10px 10px 0;
@@ -328,10 +484,138 @@
             min-height: 0;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 16px;
         }
 
-        .func-compact .panel li { font-size: .9rem; padding: 4px 0 4px 18px; }
+        .roles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            flex: 1;
+            min-height: 0;
+            align-items: stretch;
+        }
+
+        .role-card {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .role-card__head {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .role-card--user .role-card__head {
+            background: linear-gradient(135deg, rgba(139,148,127,.2), rgba(139,148,127,.06));
+        }
+
+        .role-card--admin .role-card__head {
+            background: linear-gradient(135deg, rgba(42,40,38,.1), rgba(42,40,38,.03));
+        }
+
+        .role-card__icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .role-card--user .role-card__icon {
+            background: var(--sage-dark);
+            color: #fff;
+        }
+
+        .role-card--admin .role-card__icon {
+            background: var(--ink);
+            color: #fff;
+        }
+
+        .role-card__head h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.85rem;
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1.1;
+        }
+
+        .role-card__tag {
+            margin-top: 4px;
+            font-size: .88rem;
+            color: var(--sage-dark);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            font-weight: 700;
+        }
+
+        .role-features {
+            list-style: none;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            gap: 12px;
+            padding: 20px 22px;
+        }
+
+        .role-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 18px;
+            background: var(--cream);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .role-features__mark {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            margin-top: 2px;
+            border-radius: 50%;
+            background: var(--sage-dark);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .9rem;
+            font-weight: 700;
+        }
+
+        .role-card--admin .role-features__mark {
+            background: var(--ink);
+        }
+
+        .role-features__text {
+            font-size: 1.15rem;
+            line-height: 1.35;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .role-features__text small {
+            display: block;
+            font-size: .98rem;
+            font-weight: 400;
+            color: var(--muted);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
 
         .ui-strip {
             flex: 1;
@@ -347,37 +631,92 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 6px;
-            padding: 10px 14px;
+            padding: 12px 16px;
             background: var(--cream);
             border: 1px solid var(--border);
             border-radius: 12px;
-            font-size: .8rem;
+            font-size: .95rem;
             color: var(--muted);
         }
 
         .status-inline strong {
             color: var(--ink);
-            font-size: .72rem;
+            font-size: .82rem;
             text-transform: uppercase;
             letter-spacing: .08em;
             margin-right: 4px;
         }
 
         .status-inline code {
-            font-size: .72rem;
-            padding: 3px 6px;
+            font-size: .82rem;
+            padding: 3px 7px;
         }
 
         .status-inline .arr { color: var(--sage); font-weight: 700; }
 
-        /* Architecture slide — TZ: simple scheme */
+        /* Architecture slide */
+        .arch-slide {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .arch-flow {
+            flex-shrink: 0;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr;
+            gap: 10px;
+            align-items: center;
+            padding: 16px 20px;
+            background: linear-gradient(90deg, rgba(42,40,38,.05), rgba(139,148,127,.12));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .arch-flow__node {
+            text-align: center;
+            padding: 14px 16px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            font-size: 1.12rem;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.3;
+        }
+
+        .arch-flow__node small {
+            display: block;
+            margin-top: 5px;
+            font-size: .92rem;
+            font-weight: 500;
+            color: var(--muted);
+        }
+
+        .arch-flow__arrow {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--sage-dark);
+        }
+
         .arch-layout {
             flex: 1;
             min-height: 0;
             display: grid;
-            grid-template-columns: 1fr 40%;
+            grid-template-columns: 1fr 36%;
             gap: 18px;
             align-items: stretch;
+        }
+
+        .arch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 14px;
+            min-height: 0;
         }
 
         .arch-details {
@@ -388,37 +727,41 @@
         }
 
         .arch-block {
-            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 16px 18px;
             background: #fff;
             border: 1px solid var(--border);
             border-radius: 12px;
             box-shadow: var(--shadow);
+            min-height: 0;
         }
 
         .arch-block h3 {
-            font-size: .72rem;
+            font-size: .88rem;
             text-transform: uppercase;
             letter-spacing: .1em;
             color: var(--sage-dark);
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .arch-block p, .arch-block li {
-            font-size: .88rem;
-            line-height: 1.45;
+            font-size: 1.02rem;
+            line-height: 1.48;
             color: var(--text);
         }
 
         .arch-block ul { list-style: none; }
         .arch-block li {
-            padding: 3px 0 3px 14px;
+            padding: 6px 0 6px 14px;
             position: relative;
         }
 
         .arch-block li::before {
             content: '';
-            position: absolute; left: 0; top: .55em;
+            position: absolute; left: 0; top: .65em;
             width: 5px; height: 5px;
             background: var(--sage);
             border-radius: 50%;
@@ -427,40 +770,56 @@
         .arch-layers {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .arch-layer {
             flex: 1;
-            min-width: 72px;
+            min-width: 68px;
             text-align: center;
-            padding: 8px 6px;
+            padding: 12px 8px;
             background: var(--cream);
             border: 1px solid var(--border);
             border-radius: 8px;
-            font-size: .8rem;
-            font-weight: 600;
+            font-size: .98rem;
+            font-weight: 700;
         }
 
-        .arch-layer-arrow { color: var(--sage); font-weight: 700; }
+        .arch-layer-arrow { color: var(--sage); font-weight: 700; font-size: 1.1rem; }
 
         .arch-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
         }
 
         .arch-tag {
-            padding: 4px 10px;
+            padding: 10px 12px;
             background: var(--cream);
             border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: .78rem;
+            border-radius: 8px;
+            font-size: .95rem;
             color: var(--text);
+            line-height: 1.35;
         }
 
         .arch-tag b { color: var(--ink); }
+
+        .arch-req {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .arch-req__item {
+            padding: 10px 12px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: .98rem;
+            line-height: 1.4;
+        }
 
         .arch-shot {
             height: 100%;
@@ -483,7 +842,7 @@
         }
 
         .panel h3 {
-            font-size: .78rem;
+            font-size: .85rem;
             text-transform: uppercase;
             letter-spacing: .12em;
             color: var(--sage-dark);
@@ -491,7 +850,7 @@
             font-weight: 700;
         }
 
-        .panel p, .panel li { font-size: .94rem; line-height: 1.48; color: var(--text); }
+        .panel p, .panel li { font-size: 1.05rem; line-height: 1.5; color: var(--text); }
         .panel ul:not(.checklist):not(.demo-check) { list-style: none; }
         .panel ul:not(.checklist):not(.demo-check) li { padding: 5px 0 5px 20px; position: relative; }
         .panel ul:not(.checklist):not(.demo-check) li::before {
@@ -507,7 +866,7 @@
             border-left: 4px solid var(--sage);
             background: linear-gradient(90deg, rgba(139,148,127,.14), transparent);
             border-radius: 0 var(--radius) var(--radius) 0;
-            font-size: 1rem;
+            font-size: 1.08rem;
             line-height: 1.5;
             box-shadow: var(--shadow);
         }
@@ -534,8 +893,8 @@
 
         .shot figcaption {
             flex-shrink: 0;
-            padding: 9px 14px;
-            font-size: .82rem;
+            padding: 10px 14px;
+            font-size: .92rem;
             font-weight: 600;
             text-align: center;
             background: linear-gradient(180deg, var(--cream), #fff);
@@ -565,18 +924,16 @@
         .stat b {
             display: block;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.1rem;
+            font-size: 2.4rem;
             font-weight: 600;
             line-height: 1;
             color: var(--sage-light);
         }
 
-        .stat span { font-size: .85rem; opacity: .88; margin-top: 6px; display: block; }
-
-        .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex: 1; min-height: 0; }
+        .stat span { font-size: .95rem; opacity: .88; margin-top: 6px; display: block; }
 
         .api-line {
-            font-size: .92rem;
+            font-size: 1rem;
             color: var(--muted);
             padding: 12px 16px;
             background: var(--cream);
@@ -596,11 +953,11 @@
         }
 
         .path span:not(.arr) {
-            padding: 7px 13px;
+            padding: 8px 15px;
             background: #fff;
             border: 1px solid var(--border);
             border-radius: 8px;
-            font-size: .9rem;
+            font-size: 1rem;
             font-weight: 600;
             box-shadow: 0 2px 6px rgba(0,0,0,.04);
         }
@@ -623,11 +980,11 @@
             background: #fff;
         }
 
-        table { width: 100%; border-collapse: collapse; font-size: .98rem; }
-        th, td { padding: 11px 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+        table { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
+        th, td { padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
         th {
             background: linear-gradient(180deg, var(--cream), #eeebe6);
-            font-size: .75rem;
+            font-size: .82rem;
             text-transform: uppercase;
             letter-spacing: .06em;
             color: var(--sage-dark);
@@ -637,8 +994,186 @@
         tr:last-child td { border-bottom: none; }
         .ok { color: var(--ok); font-weight: 700; }
 
-        /* PSA cards */
-        .psa { display: flex; flex-direction: column; gap: 10px; }
+        /* Slide 7 — PSA (проблема → решение → результат) */
+        .psa-slide {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .psa-flow {
+            flex-shrink: 0;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+            gap: 8px;
+            align-items: center;
+            padding: 14px 18px;
+            background: linear-gradient(90deg, rgba(180,140,90,.1), rgba(139,148,127,.12));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .psa-flow__step {
+            text-align: center;
+            padding: 10px 12px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: .98rem;
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--text);
+        }
+
+        .psa-flow__step small {
+            display: block;
+            margin-top: 3px;
+            font-size: .85rem;
+            font-weight: 500;
+            color: var(--muted);
+        }
+
+        .psa-flow__arrow {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--sage-dark);
+        }
+
+        .psa-layout {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: 1fr 36%;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .psa-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 0;
+        }
+
+        .psa-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .psa-step__head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .psa-step--problem .psa-step__head { background: linear-gradient(135deg, rgba(180,140,90,.15), rgba(180,140,90,.04)); }
+        .psa-step--solution .psa-step__head { background: linear-gradient(135deg, rgba(139,148,127,.2), rgba(139,148,127,.06)); }
+        .psa-step--result .psa-step__head { background: linear-gradient(135deg, rgba(26,107,52,.12), rgba(26,107,52,.04)); }
+
+        .psa-step__num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .psa-step--problem .psa-step__num { background: #9a7b4f; }
+        .psa-step--solution .psa-step__num { background: var(--sage-dark); }
+        .psa-step--result .psa-step__num { background: var(--ok); }
+
+        .psa-step__head h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--ink);
+            text-transform: none;
+            letter-spacing: 0;
+            margin: 0;
+        }
+
+        .psa-step__body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 20px;
+            font-size: 1.1rem;
+            line-height: 1.48;
+            color: var(--text);
+        }
+
+        .psa-step__text {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.48;
+        }
+
+        .psa-step__text code,
+        .psa-code-row code {
+            display: inline;
+            white-space: nowrap;
+            font-size: .95em;
+            padding: 2px 7px;
+        }
+
+        .psa-code-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 14px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+            font-size: .98rem;
+        }
+
+        .psa-code-row__op {
+            color: var(--sage-dark);
+            font-weight: 700;
+            font-family: Inter, sans-serif;
+        }
+
+        .psa-step__body small {
+            display: block;
+            font-size: .95rem;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .psa-shot {
+            height: 100%;
+            min-height: 0;
+        }
+
+        .psa-shot img {
+            height: 100%;
+            object-fit: contain;
+            object-position: top center;
+            background: #fff;
+        }
+
+        /* PSA cards (legacy) */
+        .psa { display: flex; flex-direction: column; gap: 10px; flex: 1; min-height: 0; }
 
         .psa-card {
             display: grid;
@@ -652,7 +1187,7 @@
         }
 
         .psa-card .label {
-            font-size: .78rem;
+            font-size: .85rem;
             text-transform: uppercase;
             letter-spacing: .1em;
             font-weight: 700;
@@ -660,7 +1195,7 @@
             padding-top: 2px;
         }
 
-        .psa-card p { font-size: .94rem; line-height: 1.48; }
+        .psa-card p { font-size: 1.05rem; line-height: 1.5; }
 
         /* Chips */
         .chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; flex-shrink: 0; }
@@ -671,12 +1206,12 @@
             border-radius: 12px;
             padding: 12px;
             text-align: center;
-            font-size: .88rem;
+            font-size: .98rem;
             box-shadow: var(--shadow);
         }
 
-        .chip strong { display: block; color: var(--ok); font-size: 1.25rem; margin-bottom: 4px; font-weight: 700; }
-        .chip small { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; }
+        .chip strong { display: block; color: var(--ok); font-size: 1.35rem; margin-bottom: 4px; font-weight: 700; }
+        .chip small { display: block; color: var(--muted); font-size: .88rem; margin-top: 2px; }
 
         .test-shots {
             flex: 1; min-height: 0;
@@ -688,10 +1223,10 @@
 
         .checklist { list-style: none; }
         .checklist li {
-            padding: 4px 0 4px 22px;
+            padding: 5px 0 5px 22px;
             position: relative;
-            font-size: .92rem;
-            line-height: 1.45;
+            font-size: 1.05rem;
+            line-height: 1.48;
         }
         .checklist li::before {
             content: '✓';
@@ -708,13 +1243,210 @@
             margin-bottom: 12px;
         }
 
-        .demo-check { list-style: none; font-size: 1rem; line-height: 1.85; margin-top: 8px; }
+        .result-slide {
+            flex: 1;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .result-layout {
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-columns: 1fr 36%;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .result-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            min-height: 0;
+        }
+
+        .result-card {
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .result-card__head {
+            padding: 18px 22px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .result-card--done .result-card__head {
+            background: linear-gradient(135deg, rgba(26,107,52,.12), rgba(26,107,52,.04));
+        }
+
+        .result-card--skills .result-card__head {
+            background: linear-gradient(135deg, rgba(139,148,127,.2), rgba(139,148,127,.06));
+        }
+
+        .result-card__head h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.65rem;
+            font-weight: 600;
+            color: var(--ink);
+            text-transform: none;
+            letter-spacing: 0;
+            margin: 0;
+        }
+
+        .result-card__head p {
+            margin-top: 4px;
+            font-size: .92rem;
+            color: var(--sage-dark);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            font-weight: 700;
+        }
+
+        .result-list {
+            list-style: none;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            gap: 10px;
+            padding: 18px 20px;
+        }
+
+        .result-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px 16px;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-radius: 11px;
+        }
+
+        .result-list__mark {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            margin-top: 1px;
+            border-radius: 50%;
+            background: var(--ok);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .85rem;
+            font-weight: 700;
+        }
+
+        .result-card--skills .result-list__mark {
+            background: var(--sage-dark);
+        }
+
+        .result-list__text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
+        .result-list__link {
+            color: var(--ink);
+            text-decoration: underline;
+            text-decoration-color: var(--sage);
+            text-underline-offset: 3px;
+            cursor: pointer;
+            transition: color .15s ease, text-decoration-color .15s ease;
+        }
+
+        .result-list__link:hover {
+            color: var(--sage-dark);
+            text-decoration-color: var(--sage-dark);
+        }
+
+        .result-list__link:focus-visible {
+            outline: 2px solid var(--sage);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        .result-list__text small {
+            display: block;
+            margin-top: 3px;
+            font-size: .95rem;
+            font-weight: 400;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .result-shot {
+            height: 100%;
+            min-height: 0;
+        }
+
+        .result-shot img {
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+        }
+
+        .result-persp {
+            flex-shrink: 0;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 16px;
+            align-items: center;
+            padding: 16px 22px;
+            background: linear-gradient(90deg, rgba(42,40,38,.06), rgba(139,148,127,.1));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .result-persp__label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .result-persp__chips {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .result-persp__chip {
+            padding: 12px 16px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            box-shadow: 0 2px 8px rgba(0,0,0,.04);
+        }
+
+        .result-persp__chip span {
+            display: block;
+            margin-top: 3px;
+            font-size: .88rem;
+            font-weight: 400;
+            color: var(--muted);
+        }
+
+        .demo-check { list-style: none; font-size: 1.12rem; line-height: 1.9; margin-top: 8px; }
         .demo-check li { padding-left: 4px; }
         .demo-check li::before { content: '□ '; color: var(--sage); font-weight: 700; }
 
         .thanks {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             margin-top: 18px;
             color: var(--ink);
             font-weight: 600;
@@ -723,7 +1455,7 @@
         .persp {
             margin-top: 12px;
             padding: 12px 16px;
-            font-size: .92rem;
+            font-size: 1.02rem;
             color: var(--muted);
             background: var(--cream);
             border-radius: 10px;
@@ -731,16 +1463,16 @@
         }
 
         code {
-            font-size: .88em;
+            font-size: .92em;
             background: rgba(139,148,127,.15);
-            padding: 2px 6px;
+            padding: 2px 7px;
             border-radius: 4px;
             color: var(--ink);
         }
 
         .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: rgba(0,0,0,.15); z-index: 99; }
         .progress-bar { height: 100%; background: linear-gradient(90deg, var(--sage-dark), var(--sage-light)); transition: width .25s ease; }
-        .nav-hint { position: fixed; bottom: 6px; right: 12px; font-size: 11px; color: rgba(255,255,255,.35); z-index: 99; pointer-events: none; }
+        .nav-hint { position: fixed; bottom: 6px; right: 12px; font-size: 12px; color: rgba(42, 40, 38, .35); z-index: 99; pointer-events: none; }
 
         @media print {
             html, body { overflow: visible; }
@@ -757,8 +1489,6 @@
 
         <!-- 1 · Титул -->
         <section class="slide active title-slide">
-            <div class="title-bg"><img src="images/image24.png" alt=""></div>
-            <div class="title-overlay"></div>
             <div class="title-content">
                 <p class="title-badge">Индивидуальный практико-ориентированный проект</p>
                 <h1>Веб-приложение интернет-магазина «Съедобное &amp; Несъедобное» с лендингом на Golang и PostgreSQL</h1>
@@ -787,32 +1517,59 @@
                     <p class="slide-lead">Клиент–серверный интернет-магазин handmade-подарков на Go и PostgreSQL.</p>
                     <p class="say">20–30 сек: что это, для кого, зачем.</p>
                 </div>
-                <div class="slide-body cols cols--55-45">
-                    <div>
-                        <div class="tz-grid-2x2">
-                            <div class="panel">
-                                <h3>Что разработано</h3>
-                                <p>Лендинг, каталог, корзина, заказы, кабинет, отзывы, админ-панель. REST API + PostgreSQL.</p>
+                <div class="slide-body project-slide">
+                    <div class="project-layout">
+                        <div class="project-grid">
+                            <div class="project-card project-card--dev">
+                                <div class="project-card__head">
+                                    <div class="project-card__icon">+</div>
+                                    <h3>Что разработано</h3>
+                                </div>
+                                <div class="project-card__body">
+                                    Лендинг, каталог, корзина, заказы, кабинет, отзывы, админ-панель
+                                    <small>REST API на Go + PostgreSQL</small>
+                                </div>
                             </div>
-                            <div class="panel">
-                                <h3>Для кого</h3>
-                                <p>Покупатели подарков и администратор магазина.</p>
+                            <div class="project-card project-card--who">
+                                <div class="project-card__head">
+                                    <div class="project-card__icon">К</div>
+                                    <h3>Для кого</h3>
+                                </div>
+                                <div class="project-card__body">
+                                    Покупатели handmade-подарков
+                                    <small>и администратор магазина</small>
+                                </div>
                             </div>
-                            <div class="panel">
-                                <h3>Какую задачу решает</h3>
-                                <p>Автоматизирует приём заказов вместо ручной обработки в мессенджерах.</p>
+                            <div class="project-card project-card--task">
+                                <div class="project-card__head">
+                                    <div class="project-card__icon">?</div>
+                                    <h3>Какую задачу решает</h3>
+                                </div>
+                                <div class="project-card__body">
+                                    Автоматизирует приём заказов
+                                    <small>вместо ручной обработки в мессенджерах</small>
+                                </div>
                             </div>
-                            <div class="panel">
-                                <h3>Результат</h3>
-                                <p>Покупатель оформляет заказ и видит статус. Админ ведёт каталог и заказы.</p>
+                            <div class="project-card project-card--result">
+                                <div class="project-card__head">
+                                    <div class="project-card__icon">✓</div>
+                                    <h3>Результат</h3>
+                                </div>
+                                <div class="project-card__body">
+                                    Покупатель оформляет заказ и видит статус
+                                    <small>админ ведёт каталог и заказы</small>
+                                </div>
                             </div>
                         </div>
-                        <p class="tz-goal"><strong>Цель достигнута:</strong> работающее веб-приложение с JWT, OAuth и подтверждением email.</p>
+                        <figure class="shot project-shot shot--fill">
+                            <img src="images/image26.png" alt="Лендинг landing.html">
+                            <figcaption>Рис. 2.11 — landing.html</figcaption>
+                        </figure>
                     </div>
-                    <figure class="shot shot--hero shot--fill">
-                        <img src="images/image24.png" alt="Лендинг">
-                        <figcaption>Рис. 2.11 — лендинг</figcaption>
-                    </figure>
+                    <div class="project-goal">
+                        <strong>Цель достигнута:</strong>
+                        <span>работающее веб-приложение с JWT, OAuth и подтверждением email</span>
+                    </div>
                 </div>
             </div>
             <footer class="slide-footer">
@@ -834,22 +1591,58 @@
                 </div>
                 <div class="slide-body func-compact">
                     <div class="roles">
-                        <div class="panel">
-                            <h3>Покупатель</h3>
-                            <ul>
-                                <li>Каталог и корзина (в т.ч. без регистрации)</li>
-                                <li>Регистрация, OAuth Google/VK, email</li>
-                                <li>Кабинет: профиль, заказы, отзывы с фото</li>
-                                <li>Оформление заказа и отслеживание статуса</li>
+                        <div class="role-card role-card--user">
+                            <div class="role-card__head">
+                                <div class="role-card__icon">П</div>
+                                <div>
+                                    <h3>Покупатель</h3>
+                                    <p class="role-card__tag">роль user</p>
+                                </div>
+                            </div>
+                            <ul class="role-features">
+                                <li>
+                                    <span class="role-features__mark">✓</span>
+                                    <span class="role-features__text">Каталог и корзина<small>работает без регистрации</small></span>
+                                </li>
+                                <li>
+                                    <span class="role-features__mark">✓</span>
+                                    <span class="role-features__text">Регистрация и вход<small>email, OAuth Google / VK</small></span>
+                                </li>
+                                <li>
+                                    <span class="role-features__mark">✓</span>
+                                    <span class="role-features__text">Личный кабинет<small>профиль, заказы, отзывы с фото</small></span>
+                                </li>
+                                <li>
+                                    <span class="role-features__mark">✓</span>
+                                    <span class="role-features__text">Оформление заказа<small>отслеживание статуса доставки</small></span>
+                                </li>
                             </ul>
                         </div>
-                        <div class="panel">
-                            <h3>Администратор</h3>
-                            <ul>
-                                <li>CRUD товаров, изображения, теги</li>
-                                <li>Управление статусами заказов</li>
-                                <li>Модерация отзывов</li>
-                                <li>Контент бренда · доступ по роли admin</li>
+                        <div class="role-card role-card--admin">
+                            <div class="role-card__head">
+                                <div class="role-card__icon">А</div>
+                                <div>
+                                    <h3>Администратор</h3>
+                                    <p class="role-card__tag">роль admin</p>
+                                </div>
+                            </div>
+                            <ul class="role-features">
+                                <li>
+                                    <span class="role-features__mark">✓</span>
+                                    <span class="role-features__text">Управление каталогом<small>CRUD товаров, изображения, теги</small></span>
+                                </li>
+                                <li>
+                                    <span class="role-features__mark">✓</span>
+                                    <span class="role-features__text">Заказы<small>смена статусов: оплата → доставка</small></span>
+                                </li>
+                                <li>
+                                    <span class="role-features__mark">✓</span>
+                                    <span class="role-features__text">Модерация отзывов<small>публикация и скрытие</small></span>
+                                </li>
+                                <li>
+                                    <span class="role-features__mark">✓</span>
+                                    <span class="role-features__text">Контент бренда<small>доступ только по роли admin</small></span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -889,10 +1682,10 @@
                         <span>Отзыв</span>
                     </div>
                     <div class="ui-strip">
-                        <figure class="shot shot--fill"><img src="images/image24.png" alt=""><figcaption>landing</figcaption></figure>
-                        <figure class="shot shot--fill"><img src="images/image27.png" alt=""><figcaption>shop</figcaption></figure>
-                        <figure class="shot shot--fill"><img src="images/image3.png" alt=""><figcaption>cart</figcaption></figure>
-                        <figure class="shot shot--fill"><img src="images/image5.png" alt=""><figcaption>cabinet</figcaption></figure>
+                        <figure class="shot shot--fill"><img src="images/image26.png" alt="Лендинг"><figcaption>landing.html</figcaption></figure>
+                        <figure class="shot shot--fill"><img src="images/image24.png" alt="Каталог"><figcaption>shop.html</figcaption></figure>
+                        <figure class="shot shot--fill"><img src="images/image2.png" alt="Корзина"><figcaption>cart.html</figcaption></figure>
+                        <figure class="shot shot--fill"><img src="images/image3.png" alt="Кабинет"><figcaption>cabinet.html</figcaption></figure>
                     </div>
                     <p class="status-inline">
                         <strong>Статусы заказа:</strong>
@@ -922,13 +1715,16 @@
                     <h2>Архитектура и логика работы</h2>
                     <p class="slide-lead">Клиент–сервер: MPA → Go REST API → PostgreSQL.</p>
                 </div>
-                <div class="slide-body">
+                <div class="slide-body arch-slide">
+                    <div class="arch-flow">
+                        <div class="arch-flow__node">Браузер<small>MPA · 9 HTML-страниц</small></div>
+                        <span class="arch-flow__arrow">↔</span>
+                        <div class="arch-flow__node">Go REST API<small>net/http · JWT · OAuth</small></div>
+                        <span class="arch-flow__arrow">↔</span>
+                        <div class="arch-flow__node">PostgreSQL<small>pgx · 19 SQL-миграций</small></div>
+                    </div>
                     <div class="arch-layout">
-                        <div class="arch-details">
-                            <div class="arch-block">
-                                <h3>Клиент–сервер</h3>
-                                <p>Браузер (MPA, 9 HTML-страниц) ↔ Go REST API ↔ PostgreSQL. Статика <code>frontend/</code> и API — один сервер. Dev: Vite проксирует <code>/api</code>.</p>
-                            </div>
+                        <div class="arch-grid">
                             <div class="arch-block">
                                 <h3>Слои backend</h3>
                                 <div class="arch-layers">
@@ -940,26 +1736,30 @@
                                     <span class="arch-layer-arrow">→</span>
                                     <div class="arch-layer">PostgreSQL</div>
                                 </div>
-                                <p style="margin-top:8px;font-size:.84rem;color:var(--muted)">HTTP/JSON → бизнес-логика и транзакции → SQL через pgx · 19 миграций</p>
+                                <p style="margin-top:10px;font-size:.95rem;color:var(--muted)">HTTP/JSON → бизнес-логика → SQL-транзакции</p>
                             </div>
                             <div class="arch-block">
-                                <h3>Модули и middleware</h3>
+                                <h3>Модули backend</h3>
                                 <div class="arch-tags">
-                                    <span class="arch-tag"><b>auth</b> JWT · OAuth</span>
-                                    <span class="arch-tag"><b>shop</b> каталог · заказы</span>
-                                    <span class="arch-tag"><b>cart</b> гость · merge</span>
-                                    <span class="arch-tag"><b>reviews</b> модерация</span>
-                                    <span class="arch-tag"><b>brand</b> контент</span>
-                                    <span class="arch-tag"><b>verify</b> email</span>
-                                    <span class="arch-tag"><b>middleware</b> JWT · admin · CORS</span>
+                                    <span class="arch-tag"><b>auth</b> · JWT, OAuth</span>
+                                    <span class="arch-tag"><b>shop</b> · каталог, заказы</span>
+                                    <span class="arch-tag"><b>cart</b> · гость, merge</span>
+                                    <span class="arch-tag"><b>reviews</b> · модерация</span>
+                                    <span class="arch-tag"><b>brand</b> · контент</span>
+                                    <span class="arch-tag"><b>verify</b> · email</span>
                                 </div>
                             </div>
                             <div class="arch-block">
-                                <h3>Пример запроса</h3>
-                                <ul>
-                                    <li><code>POST /api/orders</code> — JWT → Service → транзакция → orders + order_items</li>
-                                    <li><code>GET /api/admin/*</code> — только роль admin (403 иначе)</li>
-                                </ul>
+                                <h3>Примеры запросов</h3>
+                                <div class="arch-req">
+                                    <div class="arch-req__item"><code>POST /api/orders</code> — JWT → Service → транзакция → orders + order_items</div>
+                                    <div class="arch-req__item"><code>GET /api/admin/*</code> — только роль admin, иначе 403</div>
+                                </div>
+                            </div>
+                            <div class="arch-block">
+                                <h3>Развёртывание</h3>
+                                <p>Статика <code>frontend/</code> и API — один Go-сервер.</p>
+                                <p style="margin-top:8px">Dev: Vite проксирует <code>/api</code> · middleware: JWT, admin, CORS</p>
                             </div>
                         </div>
                         <figure class="shot arch-shot">
@@ -1035,25 +1835,61 @@
                     <p class="slide-lead">Гостевая корзина и слияние при авторизации.</p>
                     <p class="say">Проблема → решение → результат.</p>
                 </div>
-                <div class="slide-body cols cols--55-45">
-                    <div class="psa">
-                        <div class="psa-card">
-                            <div class="label">Проблема</div>
-                            <p>Покупатель добавляет товары без регистрации. При входе нельзя потерять корзину и получить дубли.</p>
-                        </div>
-                        <div class="psa-card">
-                            <div class="label">Решение</div>
-                            <p><code>CartSession</code> + <code>session_id</code>. После логина <code>POST /api/cart/merge</code> объединяет корзины в транзакции PostgreSQL.</p>
-                        </div>
-                        <div class="psa-card">
-                            <div class="label">Результат</div>
-                            <p>Товары сохраняются между сеансами. После входа — актуальная корзина и оформление заказа.</p>
-                        </div>
+                <div class="slide-body psa-slide">
+                    <div class="psa-flow">
+                        <div class="psa-flow__step">Гость добавляет товары<small>без регистрации · session_id</small></div>
+                        <span class="psa-flow__arrow">→</span>
+                        <div class="psa-flow__step">Вход / регистрация<small>JWT в cookie</small></div>
+                        <span class="psa-flow__arrow">→</span>
+                        <div class="psa-flow__step"><code>POST /api/cart/merge</code><small>слияние в транзакции</small></div>
+                        <span class="psa-flow__arrow">→</span>
+                        <div class="psa-flow__step">Единая корзина<small>без дублей и потерь</small></div>
                     </div>
-                    <figure class="shot shot--fill">
-                        <img src="images/image3.png" alt="Корзина">
-                        <figcaption>Рис. 2.14 — cart.html</figcaption>
-                    </figure>
+                    <div class="psa-layout">
+                        <div class="psa-steps">
+                            <div class="psa-step psa-step--problem">
+                                <div class="psa-step__head">
+                                    <span class="psa-step__num">1</span>
+                                    <h3>Проблема</h3>
+                                </div>
+                                <div class="psa-step__body">
+                                    <p class="psa-step__text">Покупатель кладёт товары в корзину без аккаунта</p>
+                                    <small>при входе нельзя потерять корзину или получить дубликаты позиций</small>
+                                </div>
+                            </div>
+                            <div class="psa-step psa-step--solution">
+                                <div class="psa-step__head">
+                                    <span class="psa-step__num">2</span>
+                                    <h3>Решение</h3>
+                                </div>
+                                <div class="psa-step__body">
+                                    <div class="psa-code-row">
+                                        <code>CartSession</code>
+                                        <span class="psa-code-row__op">+</span>
+                                        <code>session_id</code>
+                                        <span class="psa-code-row__op">→</span>
+                                        <code>POST /api/cart/merge</code>
+                                    </div>
+                                    <p class="psa-step__text">Гостевая корзина сохраняется, после логина — слияние без дублей</p>
+                                    <small>объединение корзин в одной PostgreSQL-транзакции через pgx</small>
+                                </div>
+                            </div>
+                            <div class="psa-step psa-step--result">
+                                <div class="psa-step__head">
+                                    <span class="psa-step__num">3</span>
+                                    <h3>Результат</h3>
+                                </div>
+                                <div class="psa-step__body">
+                                    <p class="psa-step__text">Товары сохраняются между сеансами браузера</p>
+                                    <small>после входа — актуальная корзина и оформление заказа без повторного выбора</small>
+                                </div>
+                            </div>
+                        </div>
+                        <figure class="shot psa-shot">
+                            <img src="images/image2.png" alt="Корзина cart.html">
+                            <figcaption>Рис. 2.14 — cart.html</figcaption>
+                        </figure>
+                    </div>
                 </div>
             </div>
             <footer class="slide-footer">
@@ -1109,34 +1945,71 @@
                     <h2>Итоговый результат</h2>
                     <p class="slide-lead">Работоспособный прототип: каталог → корзина → заказ → администрирование.</p>
                 </div>
-                <div class="slide-body cols cols--50-50">
-                    <div>
-                        <div class="result-grid">
-                            <div class="panel">
-                                <h3>Что получилось</h3>
-                                <ul class="checklist">
-                                    <li>9 страниц, REST API, PostgreSQL</li>
-                                    <li>JWT, OAuth, email-верификация</li>
-                                    <li>18 сценариев — Pass</li>
-                                    <li>Код и документация на GitHub</li>
+                <div class="slide-body result-slide">
+                    <div class="result-layout">
+                        <div class="result-columns">
+                            <div class="result-card result-card--done">
+                                <div class="result-card__head">
+                                    <h3>Что получилось</h3>
+                                    <p>результат проекта</p>
+                                </div>
+                                <ul class="result-list">
+                                    <li>
+                                        <span class="result-list__mark">✓</span>
+                                        <span class="result-list__text">9 страниц + REST API<small>полный цикл интернет-магазина на PostgreSQL</small></span>
+                                    </li>
+                                    <li>
+                                        <span class="result-list__mark">✓</span>
+                                        <span class="result-list__text">Безопасный вход<small>JWT, OAuth Google/VK, email-верификация</small></span>
+                                    </li>
+                                    <li>
+                                        <span class="result-list__mark">✓</span>
+                                        <span class="result-list__text">18 сценариев — Pass<small>функционал проверен в браузере и Postman</small></span>
+                                    </li>
+                                    <li>
+                                        <span class="result-list__mark">✓</span>
+                                        <span class="result-list__text"><a class="result-list__link" href="https://github.com/Resolushh/Project_Landing" target="_blank" rel="noopener noreferrer">Открытый репозиторий</a><small>код, README и документация на GitHub</small></span>
+                                    </li>
                                 </ul>
                             </div>
-                            <div class="panel">
-                                <h3>Что освоил</h3>
-                                <ul class="checklist">
-                                    <li>Проектирование БД и миграции</li>
-                                    <li>REST API на Go (H→S→R)</li>
-                                    <li>Аутентификация и роли</li>
-                                    <li>Тестирование клиент–сервер</li>
+                            <div class="result-card result-card--skills">
+                                <div class="result-card__head">
+                                    <h3>Что освоил</h3>
+                                    <p>полученные навыки</p>
+                                </div>
+                                <ul class="result-list">
+                                    <li>
+                                        <span class="result-list__mark">✓</span>
+                                        <span class="result-list__text">Проектирование БД<small>миграции, связи, ограничения CHECK/FK</small></span>
+                                    </li>
+                                    <li>
+                                        <span class="result-list__mark">✓</span>
+                                        <span class="result-list__text">REST API на Go<small>архитектура Handler → Service → Repository</small></span>
+                                    </li>
+                                    <li>
+                                        <span class="result-list__mark">✓</span>
+                                        <span class="result-list__text">Аутентификация и роли<small>JWT, bcrypt, разграничение user / admin</small></span>
+                                    </li>
+                                    <li>
+                                        <span class="result-list__mark">✓</span>
+                                        <span class="result-list__text">Тестирование<small>go test, pgAdmin, Chrome DevTools</small></span>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
-                        <p class="persp"><strong>Перспективы:</strong> оплата · доставка · деплой с HTTPS</p>
+                        <figure class="shot result-shot shot--fill">
+                            <img src="images/image24.png" alt="Каталог shop.html">
+                            <figcaption>Рис. 2.12 — shop.html</figcaption>
+                        </figure>
                     </div>
-                    <figure class="shot shot--hero shot--fill">
-                        <img src="images/image27.png" alt="Магазин">
-                        <figcaption>Рис. 2.12 — каталог товаров shop.html</figcaption>
-                    </figure>
+                    <div class="result-persp">
+                        <div class="result-persp__label">Перспективы</div>
+                        <div class="result-persp__chips">
+                            <div class="result-persp__chip">Онлайн-оплата<span>ЮKassa / Stripe</span></div>
+                            <div class="result-persp__chip">Доставка<span>расчёт и трекинг</span></div>
+                            <div class="result-persp__chip">Деплой<span>HTTPS на Vercel / VPS</span></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <footer class="slide-footer">
@@ -1169,11 +2042,11 @@
                             </ul>
                         </div>
                         <p class="thanks">Спасибо за внимание!</p>
-                        <p style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--sage-dark);margin-top:4px">Вопросы?</p>
+                        <p style="font-family:'Cormorant Garamond',serif;font-size:1.85rem;color:var(--sage-dark);margin-top:4px">Вопросы?</p>
                     </div>
                     <figure class="shot shot--hero shot--fill">
-                        <img src="images/image24.png" alt="Демо">
-                        <figcaption>Готов показать проект в работе</figcaption>
+                        <img src="images/image26.png" alt="Лендинг">
+                        <figcaption>landing.html — старт демо</figcaption>
                     </figure>
                 </div>
             </div>
